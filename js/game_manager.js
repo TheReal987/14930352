@@ -59,8 +59,8 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 1 : 2;
-    var tile = new Tile(this.grid.randomAvailableCell(), value, value === 1 ? 0 : 1);
+    var value = Math.random() < 0.75 ? 1 : (Math.random() < 0.95 ? 2 : 3);
+    var tile = new Tile(this.grid.randomAvailableCell(), value, value === 1 ? 0 : value === 2 ? 1 : 2);
 
     this.grid.insertTile(tile);
   }
@@ -141,8 +141,8 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
 
-          // The mighty 2584 tile
-          if (merged.value === 2584) self.won = true;
+          // The mighty 14930352 tile
+          if (merged.value === 14930352) self.won = true;
         } else {
           self.moveTile(tile, positions.farthest);
         }
@@ -155,6 +155,7 @@ GameManager.prototype.move = function (direction) {
   });
 
   if (moved) {
+    this.addRandomTile();
     this.addRandomTile();
 
     if (!this.movesAvailable()) {
